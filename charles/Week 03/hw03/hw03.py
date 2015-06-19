@@ -155,4 +155,4 @@ def make_anonymous_factorial():
     >>> make_anonymous_factorial()(5)
     120
     """
-    return lambda n: 1 if n == 1 else 
+    return lambda n: 1 if n == 1 else 2

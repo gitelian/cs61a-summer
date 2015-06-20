@@ -50,7 +50,13 @@ def print_tree(t, indent=0):
     for branch in branches(t):
         print_tree(branch, indent + 1)
 
-numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+numbers = tree(1,
+            [tree(2), 
+            tree(3, 
+                [tree(4), 
+                tree(5)]), 
+            tree(6, 
+                [tree(7)])])
 
 
 # Q1
@@ -65,7 +71,12 @@ def countdown_tree():
         6
           5
     """
-    "*** YOUR CODE HERE ***"
+    return tree(10,
+                [tree(9,
+                        [tree(8)]),
+                tree(7,
+                    [tree(6,
+                        [tree(5)])])])
 
 # Q2
 def size_of_tree(t):
@@ -82,7 +93,10 @@ def size_of_tree(t):
     >>> size_of_tree(numbers)
     7
     """
-    "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return 1
+    else:
+        return 1+sum([size_of_tree(branch) for branch in branches(t)])
 
 ################
 # Dictionaries #

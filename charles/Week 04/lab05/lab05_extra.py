@@ -25,7 +25,9 @@ def height(t):
     >>> height(numbers)
     2
     """
-    "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return 0
+    return 1 + max([height(branch) for branch in branches(t)])
 
 # Q6
 def acorn_finder(t):
@@ -38,7 +40,15 @@ def acorn_finder(t):
     >>> acorn_finder(numbers)
     False
     """
-    "*** YOUR CODE HERE ***"
+    from functools import reduce
+    from operator import or_
+    #acorn = tree('acorn')
+    if is_leaf(t):
+        if root(t) == 'acorn':
+            return True
+        else:
+            return False
+    return reduce(or_,[acorn_finder(branch) for branch in branches(t)],False)
 
 # Q7
 def preorder(t):
@@ -50,7 +60,11 @@ def preorder(t):
     >>> preorder(tree(2, [tree(4, [tree(6)])]))
     [2, 4, 6]
     """
-    "*** YOUR CODE HERE ***"
+    #NOTE: this solution is incomplete
+    if is_leaf(t):
+        return [root(t)]
+    l = [root(t)]
+    return l+[preorder(branch) for branch in branches(t)]
 
 ################
 # Dictionaries #
@@ -76,8 +90,8 @@ def build_successors_table(tokens):
     prev = '.'
     for word in tokens:
         if prev not in table:
-            "*** YOUR CODE HERE ***"
-        "*** YOUR CODE HERE ***"
+            table[prev] = []
+        table[prev].append(word)
         prev = word
     return table
 
@@ -89,7 +103,8 @@ def construct_sent(word, table):
     import random
     result = ' '
     while word not in ['.', '!', '?']:
-        "*** YOUR CODE HERE ***"
+        result += word+' '
+        word = random.choice(table[word])
     return result + word
 
 # Warning: do NOT try to print the return result of this function
@@ -104,9 +119,10 @@ def shakespeare_tokens(path='shakespeare.txt', url='http://goo.gl/SztLfX'):
         return shakespeare.read().decode(encoding='ascii').split()
 
 # Uncomment the following two lines
-# tokens = shakespeare_tokens()
-# table = build_successors_table(tokens)
+#tokens = shakespeare_tokens()
+#table = build_successors_table(tokens)
 
 def random_sent():
     import random
     return construct_sent(random.choice(table['.']), table)
+

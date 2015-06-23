@@ -30,9 +30,20 @@ class CheckingAccount(Account):
     def withdraw(self, amount):
         return Account.withdraw(self, amount + self.withdraw_fee)
 
+    def deposit_check(self,check):
+        if (check.payableTo != self.account_holder) or check.deposited:
+            print('The police have been notified.')
+        else:
+            self.deposit(check.amount)
+            check.deposit = True
+            return self.balance
+
 
 class Check(object):
-    "*** YOUR CODE HERE ***"
+    def __init__(self,payableTo,amount):
+        self.deposited = False
+        self.payableTo = payableTo
+        self.amount = amount
 
 # Q8
 class Keyboard:
@@ -57,17 +68,23 @@ class Keyboard:
     """
 
     def __init__(self, *args):
-        "*** YOUR CODE HERE ***"
+        self.buttons = {}
+        for button in args:
+            self.buttons[button.pos] = button
 
     def press(self, info):
         """Takes in a position of the button pressed, and
         returns that button's output"""
-        "*** YOUR CODE HERE ***"
+        self.buttons[info].pressed += 1
+        return self.buttons[info].key
 
     def typing(self, typing_input):
         """Takes in a list of positions of buttons pressed, and
         returns the total output"""
-        "*** YOUR CODE HERE ***"
+        out = ''
+        for inp in typing_input:
+            out += self.press(inp)
+        return out
 
 class Button:
     def __init__(self, pos, key):

@@ -14,7 +14,12 @@ def add_up(n, lst):
     >>> add_up(10, [5, 5])
     False
     """
-    "*** YOUR CODE HERE ***"
+    check_set = set()
+    for elem in lst:
+        if n - elem != elem:
+            check_set.add(n - elem)
+    return bool(intersection(check_set, set(lst)))
+
 
 def pow(n,k):
     """Computes n^k.
@@ -35,7 +40,8 @@ def missing_no(lst):
     >>> missing_no(list(filter(lambda x: x != 293, list(range(2000)))))
     293
     """
-    "*** YOUR CODE HERE ***"
+    return sum(range(max(lst)+1))-sum(lst)
+
 
 def find_duplicates_k(k, lst):
     """Returns True if there are any duplicates in lst that are within k
@@ -46,7 +52,10 @@ def find_duplicates_k(k, lst):
     >>> find_duplicates_k(4, [1, 2, 3, 4, 1])
     True
     """
-    "*** YOUR CODE HERE ***"
+    for i in range(len(lst)-k):
+        if len(set(lst[i:i+k])) != len(lst[i:i+k]):
+            return True
+    return False
 
 
 

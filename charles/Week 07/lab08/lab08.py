@@ -43,8 +43,9 @@ def slice_link(link, start, end):
     >>> slice_link(link, 1, 4)
     Link(1, Link(4, Link(1)))
     """
-    "*** YOUR CODE HERE ***"
-
+    if start == end:
+        return Link.empty
+    return Link(link[start],slice_link(link.rest,0,end-1-start))
 
 # Sets
 
@@ -59,7 +60,12 @@ def union(s1, s2):
     >>> union(r, t)
     {0, 1, 2, 3, 4, 6}
     """
-    "*** YOUR CODE HERE ***"
+    union_set = set()
+    for element in s1:
+        union_set.add(element)
+    for element in s2:
+        union_set.add(element)
+    return union_set
 
 def intersection(s1, s2):
     """Returns the intersection of two sets.
@@ -72,7 +78,11 @@ def intersection(s1, s2):
     >>> intersection(r, t)
     {4}
     """
-    "*** YOUR CODE HERE ***"
+    intersect = set()
+    for element in s1:
+        if element in s2:
+            intersect.add(element)
+    return intersect
 
 def extra_elem(a,b):
     """B contains every element in A, and has one additional member, find
@@ -83,7 +93,7 @@ def extra_elem(a,b):
     >>> extra_elem([1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6])
     6
     """
-    "*** YOUR CODE HERE ***"
+    return list(set(b)-set(a))[0]
 
 def find_duplicates(lst):
     """Returns True if lst has any duplicates and False if it does not.
@@ -93,6 +103,6 @@ def find_duplicates(lst):
     >>> find_duplicates([1, 2, 3, 4, 2])
     True
     """
-    "*** YOUR CODE HERE ***"
+    return len(set(lst)) != len(lst)
 
 

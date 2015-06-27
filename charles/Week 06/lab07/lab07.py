@@ -74,6 +74,7 @@ class Tree:
             branches_str = ''
         return 'Tree({0}{1})'.format(self.entry, branches_str)
 
+    @property
     def is_leaf(self):
         return not self.branches
 

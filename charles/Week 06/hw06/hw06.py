@@ -44,7 +44,11 @@ def deep_map(f, s):
     >>> deep_map(lambda x: 2 * x, Link(s, Link(Link(Link(5)))))
     Link(Link(2, Link(Link(4, Link(6)), Link(8))), Link(Link(Link(10))))
     """
-    "*** YOUR CODE HERE ***"
+    if s is Link.empty:
+        return Link.empty
+    if isinstance(s.first,Link):
+        return Link(deep_map(f,s.first),deep_map(f,s.rest))
+    return Link(f(s.first),deep_map(f,s.rest))
 
 def reverse(s):
     """Return a linked list with the elements of s in reverse order.
@@ -55,7 +59,7 @@ def reverse(s):
     >>> s
     Link(3, Link(5, Link(4, Link(6))))
     """
-    "*** YOUR CODE HERE ***"
+
 
 def has_cycle(s):
     """Return whether Link s contains a cycle.
@@ -68,7 +72,12 @@ def has_cycle(s):
     >>> has_cycle(t)
     False
     """
-    "*** YOUR CODE HERE ***"
+    if s.rest is s:
+        return True
+    elif s.rest is Link.empty:
+        return False
+    else:
+        return has_cycle(s.rest)
 
 def has_cycle_constant(s):
     """Return whether Link s contains a cycle.
@@ -118,11 +127,15 @@ class Mobile:
     @property
     def weight(self):
         """The total weight of the mobile."""
-        "*** YOUR CODE HERE ***"
+        return self.left.weight+self.right.weight
+
 
     def is_balanced(self):
         """True if and only if the mobile is balanced."""
-        "*** YOUR CODE HERE ***"
+        left_balanced = self.left.is_balanced()
+        right_balanced = self.right.is_balanced()
+        self_balanced = (self.left.torque == self.right.torque)
+        return all([left_balanced, right_balanced, self_balanced])
 
 class Branch:
     """A branch of a binary mobile."""
@@ -136,6 +149,13 @@ class Branch:
     def torque(self):
         """The torque on the branch"""
         return self.length * self.contents.weight
+
+    def is_balanced(self):
+        return self.contents.is_balanced()
+    @property
+    def weight(self):
+        return self.contents.weight
+    
 
 class Weight:
     """A weight at the end of a branch."""
